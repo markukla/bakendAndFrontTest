@@ -1,59 +1,52 @@
-<div class="createOrUpdateFormWindow">
-  <h2>Login</h2>
-  <span id="languageFlagsSpan" *ngFor="let language of activeLanguages">
-    <img class="flagImage" [src]="getFlagUrl(language)" (click)="setSelectedLanguageCode(language.languageCode)"
-         [id]="language.languageCode">
-  </span>
-  <div class="validatorInfo" *ngIf="!this.loginService.selectedLanguageCode">
-    Wybranie wersji językowej jest wymagane
-  </div>
-
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <div class="form-group col-md-6">
-        <label class="label" for="email" id="emailId">email</label>
-        <input type="text" class="form-control" formControlName="email" id="email"
-               placeholder="email">
-        <div *ngIf="email.invalid && (email.dirty || email.touched)"
-             class="alert alert-danger">
-          <!---->
-          <div class="validatorInfo" *ngIf="email.errors.required">
-            email is required.
-          </div>
-          <div class="validatorInfo" *ngIf="email.errors.email">
-            email must be valid email adress.
-          </div>
-
-        </div>
-        <label class="label" for="password">Password</label>
-        <input type="text" class="form-control" formControlName="password" id="password"
-               placeholder="password">
-        <div *ngIf="password.invalid && (password.dirty || password.touched)"
-             class="alert alert-danger">
-
-          <div class="validatorInfo" *ngIf="password.errors.required">
-            password is required.
-          </div>
-        </div>
-
-      </div>
+<div class="login-container row">
+  <div class="login-content col">
+    <h2 class="login-heading icon"><span class="hidden">Login</span></h2>
+    <ul class="login-languages row">
+      <li id="languageFlagsSpan" class="col" *ngFor="let language of activeLanguages">
+        <span class="flagImage" (click)="setSelectedLanguageCode(language.languageCode)" [id]="language.languageCode">
+          <span class="hidden">language.languageCode</span>
+        </span>
+      </li>
+    </ul>
+    <div class="validatorInfo info" *ngIf="!this.loginService.selectedLanguageCode">
+      Wybranie wersji językowej jest wymagane
     </div>
 
-    <div class="addButon">
-      <button type="submit" [disabled]="!loginForm.valid || !this.loginService.selectedLanguageCode"
-              class="btn btn-danger">Zaloguj
-      </button>
-    </div>
-  </form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <fieldset class="login-email placeholder icon">
+            <input type="text" class="form-control input-text" formControlName="email" id="email"
+                 placeholder="email">
+            <label class="label" for="email" id="emailId">Email</label>
+          </fieldset>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)"
+               class="alert alert-danger">
+            <div class="validatorInfo info" *ngIf="email.errors.required">
+              Email is required.
+            </div>
+            <div class="validatorInfo info" *ngIf="email.errors.email">
+              Email must be valid email adress.
+            </div>
 
-  <div *ngIf="this.showoperationMessage">
-    <p>{{operationMessage}}</p>
+          </div>
+          <fieldset class="login-password placeholder icon">
+            <input type="text" class="form-control input-text" formControlName="password" id="password"
+                   placeholder="password">
+            <label for="password">Password</label>
+          </fieldset>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)"
+               class="alert alert-danger">
+            <div class="validatorInfo info" *ngIf="password.errors.required">
+              Password is required.
+            </div>
+          </div>
+        </div>
+
+      <button class="login-submit" type="submit" [disabled]="!loginForm.valid || !this.loginService.selectedLanguageCode">Zaloguj</button>
+    </form>
+
+    <div *ngIf="this.showoperationMessage">
+      <p>{{operationMessage}}</p>
+    </div>
   </div>
 </div>
-
-
-
-
-
-
-

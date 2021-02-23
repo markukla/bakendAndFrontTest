@@ -1,35 +1,33 @@
-<div *ngIf="showHeaderIfNoDrawing()===true">
-  <div *ngIf="this.authenticationService.userRole && this.authenticationService.userRole === this.admin">
-  <span>
-    <a [routerLink]="['/orders']" routerLinkActive="active"> Zamówienia</a>
-  <a [routerLink]="['/businessPartners']" routerLinkActive="active"> Partnerzy</a>
-  <a [routerLink]="['/materials']" routerLinkActive="active"> Materialy</a>
-  <a [routerLink]="['/products']" routerLinkActive="active"> Produkty</a>
-     <a [routerLink]="['/users']" routerLinkActive="active"> Użytkownicy</a>
-    <a [routerLink]="['/dimensionCodes']" routerLinkActive="active"> Kody Wymiarów</a>
-    <a [routerLink]="['/languages']" routerLinkActive="active"> Języki </a>
-     <a [routerLink]="['/vocabularies']" routerLinkActive="active"> Słownik</a>
-     <a [routerLink]="['/changePasswordByLoggedUser']" routerLinkActive="active"> Zmień swoje hasło</a>
-     <a [routerLink]="['/login']" routerLinkActive="active"> Wyloguj</a>
-  </span>
+<div [className]="'header'" *ngIf="showHeaderIfNoDrawing()===true">
+  <nav *ngIf="this.authenticationService.userRole && this.authenticationService.userRole === this.admin">
+    <ul [className]="'menu'">
+      <li [className]="'menu-item'"><a [routerLink]="['/orders']" routerLinkActive="active"> Zamówienia</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/businessPartners']" routerLinkActive="active"> Partnerzy</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/materials']" routerLinkActive="active"> Materialy</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/products']" routerLinkActive="active"> Produkty</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/users']" routerLinkActive="active"> Użytkownicy</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/dimensionCodes']" routerLinkActive="active"> Kody Wymiarów</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/languages']" routerLinkActive="active"> Języki </a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/vocabularies']" routerLinkActive="active"> Słownik</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/changePasswordByLoggedUser']" routerLinkActive="active"> Zmień swoje hasło</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/login']" routerLinkActive="active"> Wyloguj</a></li>
+    </ul>
+  </nav>
 
-  </div>
-  <div *ngIf="this.authenticationService.userRole && this.authenticationService.userRole === this.editor">
-  <span>
-     <a [routerLink]="['/orders']" routerLinkActive="active"> Zamówienia</a>
-    <a [routerLink]="['/businessPartners']" routerLinkActive="active"> Partnerzy</a>
-    <a [routerLink]="['/changePasswordByLoggedUser']" routerLinkActive="active"> Zmień swoje hasło</a>
-    <a [routerLink]="['/login']" routerLinkActive="active"> Wyloguj</a>
-  </span>
+  <nav *ngIf="this.authenticationService.userRole && this.authenticationService.userRole === this.editor">
+    <ul [className]="'menu'">
+      <li [className]="'menu-item'"><a [routerLink]="['/orders']" routerLinkActive="active"> Zamówienia</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/businessPartners']" routerLinkActive="active"> Partnerzy</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/changePasswordByLoggedUser']" routerLinkActive="active"> Zmień swoje hasło</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/login']" routerLinkActive="active"> Wyloguj</a></li>
+    </ul>
+  </nav>
 
-  </div>
-  <div *ngIf="this.authenticationService.userRole && this.authenticationService.userRole === this.partner">
-  <span>
-     <a [routerLink]="['/orders']" routerLinkActive="active"> Zamówienia</a>
-    <a [routerLink]="['/changePasswordByLoggedUser']" routerLinkActive="active"> Zmień swoje hasło</a>
-    <a [routerLink]="['/login']" routerLinkActive="active"> Wyloguj</a>
-  </span>
-
-
-  </div>
+  <nav *ngIf="this.authenticationService.userRole && this.authenticationService.userRole === this.partner">
+    <ul [className]="'menu'">
+      <li [className]="'menu-item'"><a [routerLink]="['/orders']" routerLinkActive="active"> Zamówienia</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/changePasswordByLoggedUser']" routerLinkActive="active"> Zmień swoje hasło</a></li>
+      <li [className]="'menu-item'"><a [routerLink]="['/login']" routerLinkActive="active"> Wyloguj</a></li>
+    </ul>
+  </nav>
 </div>

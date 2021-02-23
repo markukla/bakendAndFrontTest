@@ -1,50 +1,134 @@
-.createOrUpdateFormWindow {
-  position: absolute;
-
-
-  left: 50%;
-
-
-  top: 50%;
-
-
-  transform: translate(-50%, -50%);
-
-
-  border: 5px solid #FFFF00;
-
-
-  padding: 10px;
-}
-.closeButton {
-  position: absolute;
-  left: 94%;
-  top: 0%;
-}
-.addButon {
-  position: relative;
-  left: 40%;
-  bottom: 10%;
-
-}
-#materialCodeLabel {
-  width: max-content;
-}
-.form-control {
-  position: relative;
-  width: max-content;
-}
-.label {
-  position: relative;
-  width: max-content;
-}
-.validatorInfo {
-  position: relative;
-  width: max-content;
-}
-.languageFlagsSpan {
-  border: 1px solid #FFFF00;
-  position: absolute;
+.login-container {
+  background: #fff;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh;
   width: 100%;
-  display:block;
+}
+
+.login-content {
+  border-radius: 16px;
+  box-shadow: 0px 0px 65px 0px rgba(60, 108, 222, 0.25);
+  max-width: 365px;
+  overflow: hidden;
+}
+
+.login-heading {
+  box-shadow: 0px 0px 65px 0px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 100%;
+  color: #1d3567;
+  height: 168px;
+  text-align: center;
+  width: 168px;
+  margin: 64px auto 64px;
+  position: relative;
+}
+
+.login-heading:before {
+  content: "\e99a";
+  font-size: 68px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-languages {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.login-languages li {
+  list-style-type: none;
+  padding: 16px 8px;
+}
+
+.login-languages li .flagImage {
+  cursor: pointer;
+  height: 32px;
+  display: block;
+  width: 32px;
+}
+
+.login-languages li .flagImage#PL {
+  background: url("./assets/pl.png") no-repeat center;
+  background-size: contain;
+}
+
+.login-languages li .flagImage#CZE {
+  background: url("./assets/cz.png") no-repeat center;
+  background-size: contain;
+}
+
+.login-email:before, .login-password:before {
+  position: absolute;
+  top: 25px;
+  left: 46px;
+}
+
+.login-email:before {
+  content: "\ea0f";
+  color: #c9d4eb;
+  font-size: 14px;
+}
+
+.login-password:before {
+  content: "\e9ad";
+  color: #c9d4eb;
+  font-size: 14px;
+}
+
+.login-submit {
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  display: block;
+  padding: 26px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  z-index: 0;
+}
+
+.login-submit:before,
+.login-submit:after {
+  background: linear-gradient(to right, #6d99ff, #3c6cde);
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  transition: opacity 0.4s;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.login-submit:before {
+  background: linear-gradient(to right, #3c6cde, #6d99ff);
+  z-index: -2;
+}
+
+.login-submit:disabled:before,
+.login-submit:disabled:after {
+  background: linear-gradient(to right, #b0c3ec, #7d9ad6);
+}
+
+.login-submit:disabled:before {
+  background: linear-gradient(to right, #7d9ad6, #b0c3ec);
+}
+
+.login-submit:hover:after {
+  opacity: 0;
 }
