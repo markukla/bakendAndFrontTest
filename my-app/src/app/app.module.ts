@@ -8,7 +8,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MaterialsComponent} from './materials/MaterialsMainComponent/materials.component';
 import { CreateNewMaterialComponent } from './materials/create-new-material/create-new-material.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SortDirective } from './helpers/directive/sort.directive';
 import { MaterialSearchDirective } from './helpers/directive/ForMaterials/material-search.directive';
 import {RouterModule} from '@angular/router';
@@ -138,7 +137,6 @@ import { ValidationErrorMessageComponent } from './ValidationMessage/validation-
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
       { path: 'orders', component: OrdersComponent},

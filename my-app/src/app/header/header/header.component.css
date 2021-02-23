@@ -1,0 +1,29 @@
+.header {
+  background: #e9ebed;
+  position: sticky;
+  top: 0;
+}
+
+.menu {
+  font-size: 0;
+  padding: 0;
+  position: relative;
+}
+
+.menu > li {
+  display: inline-block;
+}
+
+.menu > li > a {
+  background: #e9ebed;
+  display: block;
+  font-size: 16px;
+  padding: 12px 16px;
+  position: relative;
+  text-decoration: none;
+  transition: background 0.4s linear;
+}
+
+.menu > li > a:hover {
+  background: #4ecdc4;
+}
