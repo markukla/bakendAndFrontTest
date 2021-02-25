@@ -27,6 +27,7 @@ export class AuthenticationService {
   subscription: Subscription;
   vocabulariesInSelectedLanguage: VocabularyForTableCell[];
   puppeterUrl: string;
+  generalUserNames: any;
   private previousUrl: string;
   private currentUrl: string;
   private routeHistory: string[];

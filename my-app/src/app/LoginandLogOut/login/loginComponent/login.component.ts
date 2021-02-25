@@ -46,8 +46,7 @@ export class LoginComponent implements OnInit, AfterContentChecked {
     public validateMaterialCodeUniqueService: ValidateMaterialCodeUniqueService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    ) {
+    private router: Router) {
 
   }
 
@@ -110,11 +109,6 @@ export class LoginComponent implements OnInit, AfterContentChecked {
     if(avalaibeLanguageCodesInAplication.includes(languageOfBrowser)) {
       this.loginService.selectedLanguageCode = languageOfBrowser;
     }
-    this.loginService.selectedLanguageCode = 'PL';
-    this.loginService.vocabulariesInSelectedLanguage = [];
-    // tslint:disable-next-line:max-line-length
-    this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
-    });
     this.loginService.setLogedUserUserAndToken(null);
     let logInDto: LogInDto;
 
@@ -134,6 +128,14 @@ export class LoginComponent implements OnInit, AfterContentChecked {
       };
       this.loginBackendService.login(logInDto).subscribe((logedUser) => {
         this.loginService.setLogedUserUserAndToken(logedUser.body);
+
+        this.loginService.selectedLanguageCode = 'PL';
+        this.loginService.vocabulariesInSelectedLanguage = [];
+        // tslint:disable-next-line:max-line-length
+        this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
+        });
+        this.initColumnNamesInSelectedLanguage();
+        this.loginService.generalUserNames = this.generalNamesInSelectedLanguage;
         this.router.navigateByUrl('/orders');
       });
     }
