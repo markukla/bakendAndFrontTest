@@ -64,8 +64,8 @@ export class OrdersComponent implements OnInit, AfterContentChecked {
     this.route.queryParamMap.subscribe(queryParams => {
       this.partnerIdForOrdersShow = queryParams.get('patnerId');
     });
-    this.initColumnNamesInSelectedLanguage();
     this.getRecords();
+    this.initColumnNamesInSelectedLanguage();
     this.materialId = this.tableService.selectedId;
   }
   initColumnNamesInSelectedLanguage(): void {

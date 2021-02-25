@@ -12,6 +12,7 @@ import {Subscription} from "rxjs";
 import {NavigationEvent} from "@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model";
 export let browserRefresh = false;
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +26,7 @@ export class AuthenticationService {
   languages: Language [];
   subscription: Subscription;
   vocabulariesInSelectedLanguage: VocabularyForTableCell[];
+  puppeterUrl: string;
   private previousUrl: string;
   private currentUrl: string;
   private routeHistory: string[];

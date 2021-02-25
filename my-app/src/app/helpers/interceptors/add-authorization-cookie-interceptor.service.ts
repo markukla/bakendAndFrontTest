@@ -11,6 +11,16 @@ export class AddAuthorizationCookieInterceptorService implements HttpInterceptor
   constructor(private authencicationService: AuthenticationService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const requestHeaders = req.headers;
+    console.log(`request headers= + ${requestHeaders}`);
+    const puppeterHeader = req.headers.get('PuppeterUrl');
+    console.log(`puppeterHeader = ${puppeterHeader}`);
+    if(puppeterHeader) {
+      this.authencicationService.puppeterUrl = req.headers.get('PuppeterUrl');
+      console.log(`this.authencicationService.puppeterUrl = ${this.authencicationService.puppeterUrl}`);
+
+    }
+
     let newHeaders = req.headers;
     let loggedUser = this.authencicationService.loggedUser;
     let token = this.authencicationService.tokenString;

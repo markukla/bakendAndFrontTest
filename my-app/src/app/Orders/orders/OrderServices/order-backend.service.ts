@@ -33,7 +33,7 @@ export class OrderBackendService {
   }
 
   getCurrentOrdersForPrivilligedUsers(): Observable<HttpResponse<Order[]>> {
-    return this.http.get<Order[]>(`${this.rootURL + this.endpointUrl}/currents`, {observe: 'response'}).pipe(take(1));
+    return this.http.get<Order[]>(`${this.rootURL + this.endpointUrl}/currents`, {observe: 'response'});
   }
   getCurrentOrdersForPartners(partnerCode: string): Observable<HttpResponse<Order[]>> {
     return this.http.get<Order[]>(`${this.rootURL + this.endpointUrl}/currents/businessPartner/${partnerCode}`, {observe: 'response'});
@@ -79,10 +79,10 @@ export class OrderBackendService {
     const getUrl = `${this.rootURL + this.endpointUrl}/orderVersionRegister/${id}`;
     return this.http.get<OrderVersionRegister>(getUrl, {observe: 'response'} );
   }
-  getDrawingPdf(selectedDrawingUrl: string, authenticationtoken: string): Observable<any> {
+  getDrawingPdf(selectedDrawingUrl: string): Observable<any> {
     const getUrl =`${this.rootURL}/drawing/save/pdf`;
     console.log(`getUrl = ${getUrl} `);
-    return this.http.post(getUrl, {url: selectedDrawingUrl, token: authenticationtoken},{responseType: 'blob'} );
+    return this.http.post(getUrl, {url: selectedDrawingUrl},{responseType: 'blob'} );
   }
   getCreateOrderDtoFromOrder(order: Order): CreateOrderDto {
     const createOrderDto: CreateOrderDto = {

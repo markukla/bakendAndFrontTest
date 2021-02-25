@@ -47,7 +47,7 @@ class OrderController implements Controller {
         this.router.delete(`${this.path}/currents/:id`, this.removeCurrentOrderAndVersionRegister); // auth middleware removed to make puppeter work
         this.router.get(`${this.path}/currents/businessPartner/:partnerCode`, authMiddleware, this.findAllCurentVerionsOfOrderForGivenPartnerCode);
         this.router.get(`${this.path}/currents/businessPartner/:id`, authMiddleware, this.findAllCurentVerionsOfOrderForGivenPartneId);
-        this.router.get(`${this.path}/:id`, /*authMiddleware,*/ this.getOneOrderById);
+        this.router.get(`${this.path}/:id`, authMiddleware, this.getOneOrderById);
         this.router.get(`${this.path}/orderVersionRegister/:id`, authMiddleware, this.findOrderVersionRegisterById);
         this.router.get(`${this.path}/orderNumber/newest`, authMiddleware,this.getOrderNumberForNewOrder);
         this.router.post(`/drawing/save/pdf`, authMiddleware, this.usePuppetearToObtainDrawingPdf)
@@ -228,7 +228,6 @@ try{
     }
     private usePuppetearToObtainDrawingPdf = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         const url = request.body.url;
-        const token = request.body.token;
         console.log(`url to print= ${url}`);
         try {
             /*
@@ -255,7 +254,7 @@ try{
                         });
 
                     }*/
-            const pdf = await this.printPdf(url, token);
+            const pdf = await this.printPdf(url);
             response.set({'Content-Type': 'application/pdf', 'Content-Length': pdf.length})
             response.send(pdf);
         }catch (error) {
@@ -264,15 +263,34 @@ next(error);
 
     }
 
-     printPdf = async (urlToPrint: string, token: string) => {
+     printPdf = async (urlToPrint: string) => {
     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage'] });
     const page = await browser.newPage();
-         await page.setExtraHTTPHeaders({
-             'Authorization': token,
-         });
-         const mainPageUrlTest = 'http://localhost:3080/';
-    await page.goto(mainPageUrlTest, {waitUntil: 'networkidle0'});
-const pdf = await page.pdf({ format: 'A4' }); // does not save file on server but returns it to send to client
+
+
+         await page.setExtraHTTPHeaders(
+             {'PuppeterUrl': urlToPrint}
+         );
+
+         const mainPageUrlTest = `http://localhost:${process.env.PORT}/?url=${urlToPrint}`;
+         console.log((await page.goto(mainPageUrlTest)).request().headers().PuppeterUrl);
+         await page.goto(mainPageUrlTest, {waitUntil: 'networkidle0'});
+         await Promise.all([
+             page.click('#forPuppeter'),
+             page.waitForNavigation({ waitUntil: 'networkidle0' }),
+         ]);
+         // await page.click('#forPuppeter', {})
+
+         /* setTimeout(async () => {
+             pdf = await page.pdf({ format: 'A4' });
+         }, 2000);*/
+
+         await page.waitForTimeout(2000);
+
+        const pdf = await page.pdf({ format: 'A4' });
+
+
+ // does not save file on server but returns it to send to client
 
 await browser.close();
 return pdf

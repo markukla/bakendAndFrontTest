@@ -18,6 +18,8 @@ import {
 } from "../../../helpers/otherGeneralUseFunction/generalObjectWIthTableColumnDescription";
 import LogInDto from "../../authenticationTypesAndClasses/login.dto";
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,6 +35,8 @@ export class LoginComponent implements OnInit, AfterContentChecked {
   vocabularies: Vocabulary[];
   generalNamesInSelectedLanguage = generalNamesInSelectedLanguage;
   userNames = generalUserNames;
+  puppeterUrl: string;
+
 
   constructor(
     private loginBackendService: AuthenticationBackendService,
@@ -42,7 +46,8 @@ export class LoginComponent implements OnInit, AfterContentChecked {
     public validateMaterialCodeUniqueService: ValidateMaterialCodeUniqueService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    ) {
 
   }
 
@@ -85,6 +90,9 @@ export class LoginComponent implements OnInit, AfterContentChecked {
   }
 
   async ngOnInit(): Promise<void> {
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.puppeterUrl  = queryParams.get('url');
+    });
     this.loginService.vocabulariesInSelectedLanguage = [];
 
     const languages = await this.languageBackendService.getRecords().toPromise();
@@ -108,13 +116,30 @@ export class LoginComponent implements OnInit, AfterContentChecked {
     this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
     });
     this.loginService.setLogedUserUserAndToken(null);
-    const logInDto: LogInDto = {
-      email: 'jacek.luczak@outlook.com', password: 'Nicram12'
-    };
-    this.loginBackendService.login(logInDto).subscribe((logedUser) => {
-      this.loginService.setLogedUserUserAndToken(logedUser.body);
-      this.router.navigateByUrl('/orders');
-    });
+    let logInDto: LogInDto;
+
+    if(this.puppeterUrl) {
+      logInDto ={
+        email: 'puppeteer@gmail.com', password: 'Nicram12'
+      };
+      this.loginBackendService.login(logInDto).subscribe((logedUser) => {
+        this.loginService.setLogedUserUserAndToken(logedUser.body);
+        //this.router.navigateByUrl(this.puppeterUrl);
+      });
+    }
+
+     else {
+      logInDto ={
+        email: 'jacek.luczak@outlook.com', password: 'Nicram12'
+      };
+      this.loginBackendService.login(logInDto).subscribe((logedUser) => {
+        this.loginService.setLogedUserUserAndToken(logedUser.body);
+        this.router.navigateByUrl('/orders');
+      });
+    }
+
+
+
 
     console.log(`this.loginService.selectedLanguageCode = ${this.loginService.selectedLanguageCode}`);
     this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
@@ -154,5 +179,9 @@ export class LoginComponent implements OnInit, AfterContentChecked {
     const flagUlr = API_URL + language.flagUrl;
     return flagUlr;
 
+  }
+
+  navigateToPrintToPdf() {
+    this.router.navigateByUrl(this.puppeterUrl);
   }
 }

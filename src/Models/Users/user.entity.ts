@@ -35,6 +35,8 @@ class User {
     businesPartnerCompanyName?: string;
     @Column({nullable: true})
     softDeleteDate?:Date;
+    @Column({nullable: true})
+    hiden?:boolean;
 
 @ManyToMany(()=>Role)  //here we reference to entity name, not table name
     @JoinTable()
