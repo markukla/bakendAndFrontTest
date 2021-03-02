@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit, AfterContentChecked {
   generalNamesInSelectedLanguage = generalNamesInSelectedLanguage;
   userNames = generalUserNames;
   puppeterUrl: string;
+  productId:string;
+  orderId:string;
+  mode:string;
 
 
   constructor(
@@ -90,7 +93,23 @@ export class LoginComponent implements OnInit, AfterContentChecked {
 
   async ngOnInit(): Promise<void> {
     this.route.queryParamMap.subscribe(queryParams => {
-      this.puppeterUrl  = queryParams.get('url');
+      this.productId = queryParams.get('productId');
+      this.orderId = queryParams.get('orderId')
+      this.mode = queryParams.get('mode');
+
+      console.log(`this.productId = ${this.productId}`);
+      console.log(`this.mode = ${this.mode}`);
+      if(this.productId) {
+        this.puppeterUrl = `/orders/drawing?productId=${this.productId}&mode=${this.mode}`;
+      }
+      else if (this.orderId) {
+        this.puppeterUrl = `/orders/drawing?orderId=${this.orderId}&mode=${this.mode}`;
+      }
+      else {
+        console.log('wrong path!!');
+      }
+
+
     });
     this.loginService.vocabulariesInSelectedLanguage = [];
 
@@ -109,7 +128,6 @@ export class LoginComponent implements OnInit, AfterContentChecked {
     if(avalaibeLanguageCodesInAplication.includes(languageOfBrowser)) {
       this.loginService.selectedLanguageCode = languageOfBrowser;
     }
-    this.loginService.setLogedUserUserAndToken(null);
     let logInDto: LogInDto;
 
     if(this.puppeterUrl) {
@@ -118,7 +136,14 @@ export class LoginComponent implements OnInit, AfterContentChecked {
       };
       this.loginBackendService.login(logInDto).subscribe((logedUser) => {
         this.loginService.setLogedUserUserAndToken(logedUser.body);
-        //this.router.navigateByUrl(this.puppeterUrl);
+        this.loginService.selectedLanguageCode = 'PL';
+        this.loginService.vocabulariesInSelectedLanguage = [];
+        // tslint:disable-next-line:max-line-length
+        this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
+        });
+        this.initColumnNamesInSelectedLanguage();
+        this.loginService.generalUserNames = this.generalNamesInSelectedLanguage;
+        this.router.navigateByUrl(this.puppeterUrl);
       });
     }
 
@@ -140,24 +165,6 @@ export class LoginComponent implements OnInit, AfterContentChecked {
       });
     }
 
-
-
-
-    console.log(`this.loginService.selectedLanguageCode = ${this.loginService.selectedLanguageCode}`);
-    this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
-    });
-    if(this.loginService.selectedLanguageCode) {
-      this.initColumnNamesInSelectedLanguage();
-    }
-    try {
-      if (this.loginService.loggedUser) {
-        const logoutResponse = await this.loginBackendService.logout().toPromise();
-        console.log(logoutResponse.messageToUser);
-      }
-    } catch (error) {
-      console.log(` error= ${error}`);
-    }
-    this.loginService.setLogedUserUserAndToken(null);
   }
   initColumnNamesInSelectedLanguage(): void {
     // tslint:disable-next-line:max-line-length

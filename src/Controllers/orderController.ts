@@ -268,26 +268,28 @@ next(error);
     const page = await browser.newPage();
 
 
-         await page.setExtraHTTPHeaders(
-             {'PuppeterUrl': urlToPrint}
-         );
 
-         const mainPageUrlTest = `http://localhost:${process.env.PORT}/?url=${urlToPrint}`;
-         console.log((await page.goto(mainPageUrlTest)).request().headers().PuppeterUrl);
-         await page.goto(mainPageUrlTest, {waitUntil: 'networkidle0'});
+        const urlParams= urlToPrint.split('drawing')[1];
+        console.log(`urlParams= ${urlParams}`)
+         const mainPageUrlTest = `http://localhost:${process.env.PORT}/${urlParams}`;
+         console.log(`puppeterUrl = ${urlToPrint}`);
+        // await page.goto(mainPageUrlTest, {waitUntil: 'networkidle0'});
          await Promise.all([
-             page.click('#forPuppeter'),
+             page.goto(mainPageUrlTest, {waitUntil: 'networkidle0'}),
              page.waitForNavigation({ waitUntil: 'networkidle0' }),
          ]);
-         // await page.click('#forPuppeter', {})
+         /* await page.waitForTimeout(3000);
+       await Promise.all([
+             page.click('#forPuppeter'),
+             page.waitForNavigation({ waitUntil: 'networkidle0' }),
+         ]);*/
+
 
          /* setTimeout(async () => {
              pdf = await page.pdf({ format: 'A4' });
          }, 2000);*/
-
-         await page.waitForTimeout(2000);
-
-        const pdf = await page.pdf({ format: 'A4' });
+      //  await page.waitForTimeout(2000);
+        const pdf =  await page.pdf({ format: 'A4' });
 
 
  // does not save file on server but returns it to send to client
