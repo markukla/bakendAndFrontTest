@@ -544,7 +544,8 @@ export class OrderDrawingComponent implements OnInit, AfterViewInit, AfterConten
   async getDrawingPdf(): Promise<void> {
     console.error(`this.router.url= ${this.router.url}`);
     console.error(`window.location.href= ${window.location.href}`);
-    const pdfTodownLoad = await this.orderBackendService.getDrawingPdf(this.router.url).toPromise();
+    const urlForPuppeter= this.router.url+`&languageCode=${this.authenticationService.selectedLanguageCode}`
+    const pdfTodownLoad = await this.orderBackendService.getDrawingPdf(urlForPuppeter).toPromise();
     const newBlob = new Blob([pdfTodownLoad], {type: 'application/pdf'});
 
     // IE doesn't allow using a blob object directly as link href

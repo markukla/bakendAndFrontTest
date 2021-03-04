@@ -269,9 +269,9 @@ next(error);
 
 
 
-        const urlParams= urlToPrint.split('drawing')[1];
+        const urlParams= urlToPrint.substring(15)+`&email=${process.env.PuppeterEmail}&password=${process.env.PuppeterPassword}`;
         console.log(`urlParams= ${urlParams}`)
-         const mainPageUrlTest = `http://localhost:${process.env.PORT}/${urlParams}`;
+         const mainPageUrlTest = `${process.env.API_URL_HOST+ process.env.PORT}/${urlParams}`;
          console.log(`puppeterUrl = ${urlToPrint}`);
         // await page.goto(mainPageUrlTest, {waitUntil: 'networkidle0'});
          await Promise.all([

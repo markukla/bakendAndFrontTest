@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit, AfterContentChecked {
   productId:string;
   orderId:string;
   mode:string;
+  puppeterEmail: string;
+  puppeterPassword: string;
+  puppeterLanguageCode: string;
+
 
 
   constructor(
@@ -96,6 +100,9 @@ export class LoginComponent implements OnInit, AfterContentChecked {
       this.productId = queryParams.get('productId');
       this.orderId = queryParams.get('orderId')
       this.mode = queryParams.get('mode');
+      this.puppeterEmail = queryParams.get('email');
+      this.puppeterPassword = queryParams.get('password');
+      this.puppeterLanguageCode = queryParams.get('languageCode');
 
       console.log(`this.productId = ${this.productId}`);
       console.log(`this.mode = ${this.mode}`);
@@ -132,11 +139,14 @@ export class LoginComponent implements OnInit, AfterContentChecked {
 
     if(this.puppeterUrl) {
       logInDto ={
-        email: 'puppeteer@gmail.com', password: 'Nicram12'
+        email: this.puppeterEmail, password: this.puppeterPassword
       };
       this.loginBackendService.login(logInDto).subscribe((logedUser) => {
         this.loginService.setLogedUserUserAndToken(logedUser.body);
-        this.loginService.selectedLanguageCode = 'PL';
+        if(this.puppeterLanguageCode) {
+          this.loginService.selectedLanguageCode = this.puppeterLanguageCode;
+        }
+
         this.loginService.vocabulariesInSelectedLanguage = [];
         // tslint:disable-next-line:max-line-length
         this.vocabularies.forEach((vocabulary) => {this.loginService.vocabulariesInSelectedLanguage.push(this.vocabularyBackendService.createVocabularryForTableCellFromVocabulary(vocabulary));
