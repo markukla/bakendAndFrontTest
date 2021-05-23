@@ -1,6 +1,6 @@
 import {AppConfig} from './app-config';
 
-export const API_URL = 'http://212.180.169.115:443';
+export const API_URL = 'https://212.180.169.115:443';
 
 /*/api/*/
 /*http://localhost:3080  lub http://127.0.0.1:3080*/
