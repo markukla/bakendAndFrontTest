@@ -32,8 +32,8 @@ class App {
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
     }
-    privateKey = fs.readFileSync( 'privatekey.pem' );
-    certificate = fs.readFileSync( 'certificate.pem' );
+    privateKey = fs.readFileSync(path.join(__dirname, './privkey.pem'), 'utf8');
+    certificate = fs.readFileSync(path.join(__dirname, './cert.pem'), 'utf8');
     host= '0.0.0.0';
     port: number =  Number(process.env.PORT);
     private connectToDatabase() {
