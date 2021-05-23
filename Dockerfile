@@ -1,25 +1,32 @@
-FROM node:10 AS ui-build
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+# Metadata indicating an image maintainer.
+LABEL maintainer="jshelton@contoso.com"
+
+# Uses dism.exe to install the IIS role.
+RUN dism.exe /online /enable-feature /all /featurename:iis-webserver /NoRestart
+
+# Creates an HTML file and adds content to this file.
+RUN echo "Hello World - Dockerfile" > c:\inetpub\wwwroot\index.html
+
+
+FROM node:14 AS ui-build
 WORKDIR /usr/src/app
 COPY my-app/ ./my-app/
-RUN cd my-app && npm install @angular/cli && npm install && npm run build
+RUN  cd my-app
+RUN  npm install @angular/cli
+RUN  npm install
+RUN  npm run build
 
-FROM node:10 AS server-build
+FROM node:14 AS server-build
 WORKDIR /root/
 COPY --from=ui-build /usr/src/app/my-app/dist ./my-app/dist
 COPY package*.json ./
 COPY . .
-RUN npm install -g typescript
-RUN npm install -g ts-node
-RUN apt-get update \
-    && apt-get install -y wget gnupg \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
-      --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
-RUN npm install
-EXPOSE 3080
+RUN powershell npm install -g typescript
+RUN powershell npm install -g ts-node
+RUN powershell npm install
+EXPOSE 80
 
 CMD ["ts-node", "./src/server.ts"]
 

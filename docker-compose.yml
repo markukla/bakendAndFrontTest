@@ -9,13 +9,9 @@ services:
     restart: unless-stopped
     env_file: docker.env
     ports:
-      - "3080:3080"
+      - "80:80"
     volumes:
         - ./src:/usr/src/app/src
-        - ./my-app/dist:/root/my-app/dist
-        - ./src:/root/src
-        - ./ormconfig.ts:/root/ormconfig.ts
-        - ./.env:/root/.env
         - productImages:/root/src/public/images
     depends_on:
       - postgres
@@ -24,6 +20,7 @@ services:
   postgres:
     container_name: project_db
     image: postgres:latest
+    restart: always
     ports:
       - "5432:5432"
     volumes:
@@ -32,6 +29,23 @@ services:
       - docker.env
     networks:
       - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: jacek.luczak@outlook.com
+      PGADMIN_DEFAULT_PASSWORD: dostęp_PODGLAD_ZARZADZANIE_BAZA_2021
+      PGADMIN_LISTEN_PORT: 8081
+    ports:
+      - "8081:8081"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    links:
+      - postgres:postgres
+    networks:
+      - app-network
+
 
 
 
@@ -43,4 +57,5 @@ volumes:
   node_modules:
   pgdata:
   productImages:
+  pgadmin-data:
 

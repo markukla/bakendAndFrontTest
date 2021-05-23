@@ -14,6 +14,7 @@ const multer = require("multer");
 
 const path = require('path');
 import * as cors from "cors";
+import * as https from "https";
 
 
 
@@ -31,6 +32,10 @@ class App {
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
     }
+    privateKey = fs.readFileSync( 'privatekey.pem' );
+    certificate = fs.readFileSync( 'certificate.pem' );
+    host= '0.0.0.0';
+    port: number =  Number(process.env.PORT);
     private connectToDatabase() {
 
     }
@@ -80,14 +85,18 @@ class App {
 
 
 
-
-    host= '0.0.0.0';
-    port: number =  Number(process.env.PORT);
-
     public listen() {
         this.app.listen(this.port, this.host, () => {
             console.log(`Running on port:${this.port}`);
         });
+    }
+    public listenOnHttpSWithSSL(){
+        https.createServer({
+            key: this.privateKey,
+            cert: this.certificate
+        }, this.app).listen(this.port, this.host,() => {
+            console.log(`Running on port:${this.port} using https protocol`);
+        }  );
     }
 }
 
