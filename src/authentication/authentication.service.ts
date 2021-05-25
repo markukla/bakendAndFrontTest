@@ -52,7 +52,7 @@ class AuthenticationService implements RepositoryService{
 
     public createCookie(tokenData: TokenData) {
         //Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}
-        return `${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+        return `${tokenData.token}; HttpOnly; Secure; Max-Age=${tokenData.expiresIn}`;
     }
 
     public createToken(user: User ): TokenData {

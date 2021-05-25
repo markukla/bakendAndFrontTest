@@ -52,5 +52,6 @@ validateEnv();
 
         ],
     );
-    app.listen();
+    app.listenOn80AndRedirectToHttps443();
+    app.listenOnHttpSWithSSL();
 })();

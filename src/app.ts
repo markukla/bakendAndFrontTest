@@ -15,6 +15,8 @@ const multer = require("multer");
 const path = require('path');
 import * as cors from "cors";
 import * as https from "https";
+import * as http from "http";
+
 
 
 
@@ -47,7 +49,7 @@ class App {
 
 
     private initializeMiddlewares() {
-        this.app.use(cors());
+       // this.app.use(cors());
         const publicDirectoryPath= path.join(__dirname, './public');
         console.log(`publicDirectoryPath= ${publicDirectoryPath}`);
         this.app.use(express.static(publicDirectoryPath));
@@ -58,15 +60,26 @@ class App {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
-        this.app.get('/', (req:any,res:any) => {
-            res.sendFile(process.cwd()+"/my-app/dist/projekt1FilterFront/index.html")
+        this.app.enable('trust proxy');
+        this.app.use((req:any, res:any, next:any) => {
+            req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
+            console.log('redirecting from port 80 to port 443 in app middleware');
+        });
+        this.app.get('/', (req: express.Request,res:express.Response) => {
+
+                res.sendFile(process.cwd()+"/my-app/dist/projekt1FilterFront/index.html")
         });
         this.app.get('/*', function(req:any, res:any, next) {
-            if(req.url.includes('api')){
-               return next();
 
-            }
-            res.sendFile(process.cwd()+"/my-app/dist/projekt1FilterFront/index.html")
+
+
+                if(req.url.includes('api')){
+                    return next();
+
+                }
+                res.sendFile(process.cwd()+"/my-app/dist/projekt1FilterFront/index.html")
+
+
         });
     }
 
@@ -97,6 +110,15 @@ class App {
         }, this.app).listen(this.port, this.host,() => {
             console.log(`Running on port:${this.port} using https protocol`);
         }  );
+    }
+
+    public listenOn80AndRedirectToHttps443() {
+        http.createServer(function (req:any, res:any) {
+            res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+            res.end();
+        }).listen(80);
+        console.log('listen on port 80 in order to redirect to 443')
+
     }
 }
 
