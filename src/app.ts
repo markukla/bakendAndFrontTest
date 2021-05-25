@@ -61,10 +61,11 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.enable('trust proxy');
-        this.app.use((req:any, res:any, next:any) => {
+        /*        this.app.use((req:any, res:any, next:any) => {
             req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
             console.log('redirecting from port 80 to port 443 in app middleware');
-        });
+        });*/
+
         this.app.get('/', (req: express.Request,res:express.Response) => {
 
                 res.sendFile(process.cwd()+"/my-app/dist/projekt1FilterFront/index.html")
