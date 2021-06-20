@@ -5,16 +5,16 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "alwaysStrict": true,
+    "allowJs": true,
     "noImplicitAny": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
-    "noEmit":false
+    "noEmit":false,
+    "module":"commonjs"
   },
   "include": [
     "src/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["**/node_modules", "**/build", "**/dist", "**/*.md", "**/rollup.config.js"]
 }

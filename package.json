@@ -4,10 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start":"ts-node ./src/server.ts",
     "dev": "ts-node ./src/server.ts",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts",
-    "test": "jest"
+    "build": "npm run tsc",
+    "test": "jest",
+    "tsc": "tsc",
+    "rollup": "rollup -c",
+    "install-windows-service": "winser -i",
+    "uninstall-windows-service": "winser -r"
   },
   "keywords": [],
   "author": "",
