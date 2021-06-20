@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 
 import Controller from 'interfaces/controller.interface';
 
@@ -6,21 +6,11 @@ import validationMiddleware from "../middleware/validation.middleware";
 
 import authMiddleware from "../middleware/auth.middleware";
 import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
-import Material from "../Models/Materials/material.entity";
-import CreateMaterialDto from "../Models/Materials/material.dto";
-import MaterialNotFoundExceptionn from "../Exceptions/MaterialNotFoundException";
-import Product from "../Models/Products/product.entity";
-import ProductService from "../RepositoryServices/productRepositoryService";
-import CreateProductDto from "../Models/Products/product.dto";
-import ProductNotFoundExceptionn from "../Exceptions/ProductNotFoundException";
-import * as multer from "multer";
-import * as fs from "fs";
+
 import OrderService from "../RepositoryServices/orderRepositoryService";
 import CreateOrderDto from "../Models/Order/order.dto";
 import Order from "../Models/Order/order.entity";
-import {DeleteResult} from "typeorm";
 import OrderVersionRegister from "../Models/OrderVersionRegister/orderVersionRegister.entity";
-import OrderNotFoundException from "../Exceptions/OrderNotFoundException";
 import NewestOrderNumber from "../Models/Order/newestOrderNumber";
 const path = require('path');
 const puppeteer = require('puppeteer');

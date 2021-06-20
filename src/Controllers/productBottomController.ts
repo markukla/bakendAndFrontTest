@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 
 import Controller from 'interfaces/controller.interface';
 import validationMiddleware from "../middleware/validation.middleware";

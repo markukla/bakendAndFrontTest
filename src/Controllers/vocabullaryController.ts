@@ -1,5 +1,5 @@
 import Controller from "../interfaces/controller.interface";
-import * as express from "express";
+import * as express from 'express';
 import DimensionCodeService from "../RepositoryServices/dimensionCodeRepositoryService";
 import authMiddleware from "../middleware/auth.middleware";
 import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";

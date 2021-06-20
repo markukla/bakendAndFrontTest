@@ -1,22 +1,14 @@
-import * as express from 'express';
+import * as express from "express";
 
 import Controller from 'interfaces/controller.interface';
-
 import validationMiddleware from "../middleware/validation.middleware";
-
-
-
-
 import authMiddleware from "../middleware/auth.middleware";
 import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
-import Material from "../Models/Materials/material.entity";
-import CreateMaterialDto from "../Models/Materials/material.dto";
-import MaterialNotFoundExceptionn from "../Exceptions/MaterialNotFoundException";
 import Product from "../Models/Products/product.entity";
 import ProductService from "../RepositoryServices/productRepositoryService";
 import CreateProductDto from "../Models/Products/product.dto";
 import ProductNotFoundExceptionn from "../Exceptions/ProductNotFoundException";
-import * as multer from "multer";
+import * as multer from 'multer';
 import * as fs from "fs";
 import {DrawingPaths} from "../Models/Products/drawingPaths";
 import NoPngFileException from "../Exceptions/noPngFile";
