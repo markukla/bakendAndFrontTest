@@ -34,8 +34,8 @@ class App {
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
     }
-    privateKey = fs.readFileSync(path.join(__dirname, './privkey.pem'), 'utf8');
-    certificate = fs.readFileSync(path.join(__dirname, './cert.pem'), 'utf8');
+    privateKey = fs.readFileSync('C:/Users/iisuser/certbot/config/live/filterbag.designer.1filter.eu/privkey.pem', 'utf8');
+    certificate = fs.readFileSync('C:/Users/iisuser/certbot/config/live/filterbag.designer.1filter.eu/fullchain.pem', 'utf8');
     host= '0.0.0.0';
     port: number =  Number(process.env.PORT);
     private connectToDatabase() {

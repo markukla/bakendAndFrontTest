@@ -110,6 +110,7 @@ export class ProductTypeComponent implements OnInit, AfterContentChecked {
         this.showConfirmDeleteWindow = false;
         this.statusService.makeOperationStatusVisable();
         this.statusService.resetOperationStatusAfterTimeout([this.operationFailerStatusMessage, this.operationSuccessStatusMessage]);
+
       });
     }
     else {
